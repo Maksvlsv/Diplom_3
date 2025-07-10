@@ -3,6 +3,10 @@ package site.nomoreparties.stellarburgers.page;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class ProfilePage {
     private final WebDriver driver;
@@ -21,8 +25,14 @@ public class ProfilePage {
     // Действия
 
     @Step("Проверить, что открыта страница профиля")
-    public boolean isProfileHeaderVisible() {
+    public boolean checkProfileHeaderVisible() {
         return driver.findElements(profileHeader).size() > 0;
+    }
+
+    @Step("Ожидание появления заголовка профиля")
+    public void waitForProfileHeaderVisible() {
+        new WebDriverWait(driver, Duration.ofSeconds(5))
+                .until(ExpectedConditions.visibilityOfElementLocated(profileHeader));
     }
 
     @Step("Нажать 'Конструктор'")

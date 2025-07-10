@@ -1,6 +1,10 @@
 package site.nomoreparties.stellarburgers.utils;
 
+import io.restassured.RestAssured;
+
 import java.util.UUID;
+
+import static io.restassured.RestAssured.given;
 
 public class UserGenerator {
 
@@ -19,5 +23,23 @@ public class UserGenerator {
 
     public static String getDefaultName() {
         return "Тест";
+    }
+
+    public static void createUserViaApi(String email, String password, String name) {
+        RestAssured.baseURI = "https://stellarburgers.nomoreparties.site";
+
+        given()
+                .header("Content-Type", "application/json")
+                .body("{\"email\": \"" + email + "\", \"password\": \"" + password + "\", \"name\": \"" + name + "\"}")
+                .when()
+                .post("/api/auth/register")
+                .then()
+                .statusCode(200);
+    }
+
+    public static String createRandomUser() {
+        String email = generateRandomEmail();
+        createUserViaApi(email, getDefaultPassword(), getDefaultName());
+        return email;
     }
 }

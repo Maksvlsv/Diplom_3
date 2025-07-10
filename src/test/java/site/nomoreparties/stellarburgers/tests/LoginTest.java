@@ -1,44 +1,25 @@
 package site.nomoreparties.stellarburgers.tests;
 
 import io.qameta.allure.Allure;
-import io.restassured.RestAssured;
-import io.restassured.response.Response;
-import org.junit.After;
 import org.junit.Before;
+import org.junit.After;
 import org.junit.Test;
 import site.nomoreparties.stellarburgers.page.*;
 import site.nomoreparties.stellarburgers.utils.UserGenerator;
 
-import java.util.UUID;
-
-import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.equalTo;
-
 public class LoginTest extends BaseTest {
 
     private final String baseUrl = "https://stellarburgers.nomoreparties.site/";
-    private final String apiUrl = baseUrl + "api/auth/register";
     private String email;
-    private final String password = "123456";
+    private final String password = UserGenerator.getDefaultPassword();
 
     @Before
     public void setUp() {
-        //Генерайия юзера
-        email = UserGenerator.generateRandomEmail();
-
-        //Регистрация через API
-        RestAssured.baseURI = baseUrl;
-        Response response = given()
-                .header("Content-type", "application/json")
-                .body("{\"email\":\"" + email + "\",\"password\":\"" + password + "\",\"name\":\"Макс\"}")
-                .when()
-                .post("/api/auth/register");
-
-        //Проверка успешной регистрации
-        response.then().statusCode(200).body("success", equalTo(true));
+        // Создание пользователя через API
+        email = UserGenerator.createRandomUser();
         Allure.addAttachment("Создан пользователь", email);
 
-        //Запуск браузера
+        // Запуск браузера
         String browser = System.getProperty("browser", "chrome");
         startBrowser(browser);
         driver.get(baseUrl);

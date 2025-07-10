@@ -11,32 +11,25 @@ import site.nomoreparties.stellarburgers.utils.UserGenerator;
 
 import java.util.UUID;
 
-import static org.hamcrest.Matchers.equalTo;
-
 public class RegisterTest extends BaseTest {
     private final String baseUrl = "https://stellarburgers.nomoreparties.site/";
-    private final String validPassword = "123456";
-    private final String shortPassword = "123";
+    private final String validPassword = UserGenerator.getDefaultPassword();
+    private final String shortPassword = UserGenerator.getShortPassword();
     private String email;
 
     @Before
     public void setUp() {
-        //Запуск браузера
         String browser = System.getProperty("browser", "chrome");
         startBrowser(browser);
         driver.get(baseUrl);
         Allure.addAttachment("Браузер", browser);
 
-        //Проверка успешной регистрации
         email = UserGenerator.generateRandomEmail();
-        Allure.step("Создан пользователь с email: " + email);
+        Allure.step("Сгенерирован email для регистрации: " + email);
     }
-
 
     @Test
     public void successfulRegistration() {
-        email = UserGenerator.generateRandomEmail();
-
         Allure.step("Открыть форму регистрации", () -> {
             new MainPage(driver).clickLoginButton();
             new LoginPage(driver).clickRegisterLink();
@@ -61,7 +54,7 @@ public class RegisterTest extends BaseTest {
 
     @Test
     public void registrationWithShortPasswordShowsError() {
-        email = generateEmail();
+        email = UserGenerator.generateRandomEmail();
 
         Allure.step("Открыть форму регистрации", () -> {
             new MainPage(driver).clickLoginButton();
@@ -88,9 +81,5 @@ public class RegisterTest extends BaseTest {
     @After
     public void tearDownTest() {
         tearDown();
-    }
-
-    private String generateEmail() {
-        return UUID.randomUUID() + "@yandex.ru";
     }
 }

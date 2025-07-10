@@ -71,4 +71,10 @@ public class MainPage {
     public void clickProfileButton() {
         driver.findElement(personalAccountButton).click();
     }
+
+    @Step("Ожидать, что вкладки конструктора видимы и кликабельны")
+    public void waitForTabsVisible() {
+        new WebDriverWait(driver, Duration.ofSeconds(5))
+                .until(ExpectedConditions.elementToBeClickable(bunsTab));
+    }
 }
