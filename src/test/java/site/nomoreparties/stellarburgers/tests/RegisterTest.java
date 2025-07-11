@@ -18,14 +18,10 @@ public class RegisterTest extends BaseTest {
     private String email;
 
     @Before
-    public void setUp() {
-        String browser = System.getProperty("browser", "chrome");
-        startBrowser(browser);
-        driver.get(baseUrl);
-        Allure.addAttachment("Браузер", browser);
-
-        email = UserGenerator.generateRandomEmail();
-        Allure.step("Сгенерирован email для регистрации: " + email);
+    public void createUser() {
+        email = UserGenerator.createRandomUser();
+        emailToDelete = email;
+        Allure.addAttachment("Создан пользователь", email);
     }
 
     @Test
@@ -35,7 +31,7 @@ public class RegisterTest extends BaseTest {
             new LoginPage(driver).clickRegisterLink();
         });
 
-        Allure.step("Заполнить форму: имя = Макс, email = " + email, () -> {
+        Allure.step("Заполнить форму: имя = Максим, email = " + email, () -> {
             RegisterPage registerPage = new RegisterPage(driver);
             registerPage.setName("Макс");
             registerPage.setEmail(email);
@@ -61,7 +57,7 @@ public class RegisterTest extends BaseTest {
             new LoginPage(driver).clickRegisterLink();
         });
 
-        Allure.step("Заполнить форму: имя = Миша, email = " + email, () -> {
+        Allure.step("Заполнить форму: имя = Ольга, email = " + email, () -> {
             RegisterPage registerPage = new RegisterPage(driver);
             registerPage.setName("Миша");
             registerPage.setEmail(email);
@@ -76,10 +72,5 @@ public class RegisterTest extends BaseTest {
             RegisterPage registerPage = new RegisterPage(driver);
             assert registerPage.isPasswordErrorVisible();
         });
-    }
-
-    @After
-    public void tearDownTest() {
-        tearDown();
     }
 }

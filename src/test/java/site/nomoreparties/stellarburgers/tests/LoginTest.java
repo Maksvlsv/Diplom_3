@@ -14,16 +14,10 @@ public class LoginTest extends BaseTest {
     private final String password = UserGenerator.getDefaultPassword();
 
     @Before
-    public void setUp() {
-        // Создание пользователя через API
+    public void createUser() {
         email = UserGenerator.createRandomUser();
+        emailToDelete = email;
         Allure.addAttachment("Создан пользователь", email);
-
-        // Запуск браузера
-        String browser = System.getProperty("browser", "chrome");
-        startBrowser(browser);
-        driver.get(baseUrl);
-        Allure.addAttachment("Браузер", browser);
     }
 
     @Test
@@ -106,10 +100,5 @@ public class LoginTest extends BaseTest {
         Allure.step("Проверить, что вход выполнен — отображается кнопка 'Оформить заказ'", () -> {
             new MainPage(driver).checkOrderButtonVisible();
         });
-    }
-
-    @After
-    public void tearDownTest() {
-        tearDown();
     }
 }
