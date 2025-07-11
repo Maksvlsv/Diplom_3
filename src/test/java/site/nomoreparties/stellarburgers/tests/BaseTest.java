@@ -13,7 +13,7 @@ public abstract class BaseTest {
     protected WebDriver driver;
     protected final String baseUrl = "https://stellarburgers.nomoreparties.site/";
 
-    // 👇 Поля для удаления пользователя
+    // Поля для удаления пользователя
     protected String emailToDelete;
     protected final String defaultPassword = UserGenerator.getDefaultPassword();
 

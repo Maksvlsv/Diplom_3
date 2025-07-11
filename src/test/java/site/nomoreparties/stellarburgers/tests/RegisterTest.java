@@ -9,7 +9,6 @@ import site.nomoreparties.stellarburgers.page.MainPage;
 import site.nomoreparties.stellarburgers.page.RegisterPage;
 import site.nomoreparties.stellarburgers.utils.UserGenerator;
 
-import java.util.UUID;
 
 public class RegisterTest extends BaseTest {
     private final String baseUrl = "https://stellarburgers.nomoreparties.site/";

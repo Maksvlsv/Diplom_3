@@ -1,7 +1,6 @@
 package site.nomoreparties.stellarburgers.tests;
 
 import io.qameta.allure.Allure;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import site.nomoreparties.stellarburgers.page.LoginPage;
