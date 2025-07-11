@@ -13,7 +13,6 @@ public class MainPage {
     // Локаторы
     private final By loginButton = By.xpath("//button[text()='Войти в аккаунт']");
     private final By personalAccountButton = By.xpath("//p[text()='Личный Кабинет']");
-    private final By constructorButton = By.xpath("//p[text()='Конструктор']");
     private final By logo = By.className("AppHeader_header__logo__2D0X2");
 
     private final By bunsTab = By.xpath("//span[text()='Булки']");
@@ -29,16 +28,11 @@ public class MainPage {
         this.driver = driver;
     }
 
+    //Действия
+
     @Step("Нажать 'Войти в аккаунт'")
     public void clickLoginButton() {
         driver.findElement(loginButton).click();
-    }
-
-    @Step("Нажать 'Личный кабинет'")
-    public void clickPersonalAccountButton() {
-        new WebDriverWait(driver, Duration.ofSeconds(5))
-                .until(ExpectedConditions.elementToBeClickable(personalAccountButton));
-        driver.findElement(personalAccountButton).click();
     }
 
     @Step("Переключиться на вкладку 'Булки'")

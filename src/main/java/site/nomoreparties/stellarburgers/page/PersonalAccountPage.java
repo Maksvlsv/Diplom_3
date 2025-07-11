@@ -12,6 +12,8 @@ public class PersonalAccountPage {
 
     private final WebDriver driver;
 
+    // Локаторы
+
     private final By logoutButton = By.xpath("//button[text()='Выход']");
     private final By constructorButton = By.xpath("//p[text()='Конструктор']");
     private final By logo = By.className("AppHeader_header__logo__2D0X2");
@@ -19,6 +21,8 @@ public class PersonalAccountPage {
     public PersonalAccountPage(WebDriver driver) {
         this.driver = driver;
     }
+
+    // Действия
 
     @Step("Нажать кнопку 'Выход'")
     public void clickLogoutButton() {
