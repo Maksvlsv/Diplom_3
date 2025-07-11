@@ -8,7 +8,6 @@ import site.nomoreparties.stellarburgers.utils.UserGenerator;
 
 public class LoginTest extends BaseTest {
 
-    private final String baseUrl = "https://stellarburgers.nomoreparties.site/";
     private String email;
     private final String password = UserGenerator.getDefaultPassword();
 

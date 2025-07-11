@@ -11,7 +11,7 @@ import site.nomoreparties.stellarburgers.utils.UserGenerator;
 
 
 public class RegisterTest extends BaseTest {
-    private final String baseUrl = "https://stellarburgers.nomoreparties.site/";
+
     private final String validPassword = UserGenerator.getDefaultPassword();
     private final String shortPassword = UserGenerator.getShortPassword();
     private String email;
