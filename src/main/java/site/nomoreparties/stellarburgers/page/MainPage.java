@@ -23,12 +23,11 @@ public class MainPage {
     private final By activeSaucesTab = By.xpath("//div[contains(@class,'tab_tab_type_current')]/span[text()='Соусы']");
     private final By activeFillingsTab = By.xpath("//div[contains(@class,'tab_tab_type_current')]/span[text()='Начинки']");
 
+    private final By modalOverlay = By.className("Modal_modal__overlay__1xx9u");
 
     public MainPage(WebDriver driver) {
         this.driver = driver;
     }
-
-    //Действия
 
     @Step("Нажать 'Войти в аккаунт'")
     public void clickLoginButton() {
@@ -37,26 +36,36 @@ public class MainPage {
 
     @Step("Переключиться на вкладку 'Булки'")
     public void clickBunsTab() {
-        WebElement buns = new WebDriverWait(driver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.elementToBeClickable(bunsTab));
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", buns);
-        buns.click();
+        clickTab(bunsTab);
     }
 
     @Step("Переключиться на вкладку 'Соусы'")
     public void clickSaucesTab() {
-        WebElement sauces = new WebDriverWait(driver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.elementToBeClickable(saucesTab));
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", sauces);
-        sauces.click();
+        clickTab(saucesTab);
     }
 
     @Step("Переключиться на вкладку 'Начинки'")
     public void clickFillingsTab() {
-        WebElement fillings = new WebDriverWait(driver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.elementToBeClickable(fillingsTab));
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", fillings);
-        fillings.click();
+        clickTab(fillingsTab);
+    }
+
+    private void clickTab(By tabLocator) {
+        waitForOverlayToDisappear();
+        WebElement tab = new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.elementToBeClickable(tabLocator));
+
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", tab);
+
+        try {
+            tab.click();
+        } catch (ElementClickInterceptedException e) {
+            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", tab);
+        }
+    }
+
+    private void waitForOverlayToDisappear() {
+        new WebDriverWait(driver, Duration.ofSeconds(3))
+                .until(ExpectedConditions.invisibilityOfElementLocated(modalOverlay));
     }
 
     @Step("Проверить, что кнопка 'Оформить заказ' отображается (вход выполнен)")
